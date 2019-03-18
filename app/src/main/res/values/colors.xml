@@ -11,4 +11,6 @@
     <color name="backgroundColor">#F5F5F6</color>
     <color name="backgroundDarkColor">#E1E2E1</color>
     <color name="whiteColor">#FFFFFF</color>
+    <color name="amount_background">#BBDEFB</color>
+    <color name="result_background">#FFE0B2</color>
 </resources>

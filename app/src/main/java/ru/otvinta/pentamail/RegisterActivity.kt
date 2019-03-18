@@ -6,46 +6,46 @@ import android.os.AsyncTask
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import android.widget.TextSwitcher
 import android.widget.TextView
 import com.google.android.material.textfield.TextInputEditText
-import java.io.BufferedReader
-import java.io.BufferedWriter
-import java.io.InputStreamReader
-import java.io.OutputStreamWriter
-import java.lang.Exception
-import java.lang.StringBuilder
 import java.net.HttpURLConnection
 import java.net.URL
+import java.io.*
+import java.lang.Exception
+import java.lang.StringBuilder
 
-class EnterActivity : AppCompatActivity() {
+
+class RegisterActivity : AppCompatActivity() {
 
     var result = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_enter)
+        setContentView(R.layout.activity_register)
 
+        val penta = findViewById<TextView>(R.id.PentaMailName)
         val email = findViewById<TextInputEditText>(R.id.EmailField)
         val password = findViewById<TextInputEditText>(R.id.PasswordField)
-
+        val backupMail = findViewById<TextInputEditText>(R.id.BackupMailField)
+        val phone = findViewById<TextInputEditText>(R.id.PhoneField)
         val registerButton = findViewById<Button>(R.id.RegisterButton)
-        registerButton.setOnClickListener {
-            val intent =  Intent(this, RegisterActivity::class.java)
-            startActivity(intent)
-        }
 
-        val enterButton = findViewById<Button>(R.id.EnterButton)
-        enterButton.setOnClickListener {
-            val enter = EnterTask()
-            enter.execute("Enter", email.text.toString(), password.text.toString())
-            result = enter.get()
+        registerButton.setOnClickListener {
+            val register = RegisterTask()
+            register.execute("Register", email.text.toString(), password.text.toString(), backupMail.text.toString(), phone.text.toString())
+            result = register.get()
             if (result == "true") {
-                //val intent = Intent()
+                val intent = Intent(this, EnterActivity::class.java)
+                startActivity(intent)
+            }
+            else {
+                penta.text = result
             }
         }
     }
 
-    class EnterTask() : AsyncTask<String, String, String>() {
+    class RegisterTask : AsyncTask<String, Void, String>() {
 
         private lateinit var connection : HttpURLConnection
 
@@ -65,6 +65,8 @@ class EnterActivity : AppCompatActivity() {
                 val builder = Uri.Builder().appendQueryParameter("method", params[0])
                     .appendQueryParameter("email", params[1])
                     .appendQueryParameter("password", params[2])
+                    .appendQueryParameter("backupMail", params[3])
+                    .appendQueryParameter("phone", params[4])
 
                 val query = builder.build().encodedQuery
 

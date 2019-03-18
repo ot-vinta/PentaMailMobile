@@ -59,7 +59,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@drawable/input_form_style"
-                        android:layout_marginHorizontal="25dp"
+                        android:layout_marginLeft="65dp"
+                        android:layout_marginRight="65dp"
                         app:helperTextEnabled="false" app:hintAnimationEnabled="false" app:hintEnabled="false">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -67,10 +68,10 @@
                             android:layout_height="40dp"
                             android:layout_marginHorizontal="10dp"
                             android:textColor="@color/primaryTextColor"
-                            android:id="@+id/LoginField" android:inputType="text"
+                            android:id="@+id/EmailField" android:inputType="textWebEmailAddress"
                             android:fontFamily="@font/roboto" android:textSize="18sp"
                             android:textColorHint="@color/secondaryTextColor"
-                            android:hint="Логин" style="@style/Widget.AppCompat.EditText"/>
+                            android:hint="Email"/>
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
             <LinearLayout
@@ -83,7 +84,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@drawable/input_form_style"
-                        android:layout_marginHorizontal="25dp" app:hintEnabled="false">
+                        android:layout_marginLeft="65dp"
+                        android:layout_marginRight="65dp"
+                        app:hintEnabled="false">
 
                     <com.google.android.material.textfield.TextInputEditText
                             android:layout_width="match_parent"
