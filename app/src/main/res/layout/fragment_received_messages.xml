@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ReceivedMessagesFragment"
+        android:background="@color/backgroundColor"
+        android:columnCount="8">
+    <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:title="@string/NewMessagesLong"
+            app:titleTextColor="@color/primaryTextColor"
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+            android:layout_column="0"
+            android:layout_row="0"
+            android:layout_columnSpan="8"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/MessageList"
+            android:layout_column="0"
+            android:layout_row="1"
+            android:layout_columnSpan="8"/>
+</GridLayout>

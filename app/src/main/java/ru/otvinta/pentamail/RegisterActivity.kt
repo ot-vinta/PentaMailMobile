@@ -6,14 +6,12 @@ import android.os.AsyncTask
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
-import android.widget.TextSwitcher
 import android.widget.TextView
 import com.google.android.material.textfield.TextInputEditText
 import java.net.HttpURLConnection
 import java.net.URL
 import java.io.*
 import java.lang.Exception
-import java.lang.StringBuilder
 
 
 class RegisterActivity : AppCompatActivity() {

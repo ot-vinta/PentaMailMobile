@@ -40,7 +40,10 @@ class EnterActivity : AppCompatActivity() {
             enter.execute("Enter", email.text.toString(), password.text.toString())
             result = enter.get()
             if (result == "true") {
-                //val intent = Intent()
+                val account = email.text.toString()
+                val intent = Intent(this, MainActivity::class.java)
+                intent.putExtra("email", account)
+                startActivity(intent)
             }
         }
     }

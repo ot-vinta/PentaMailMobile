@@ -1,3 +1,12 @@
 <resources>
-    <string name="app_name">PentaMail</string>
+    <string name="app_name">Пента.Почта</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="Spam">Спам</string>
+    <string name="Sent">Отправленные</string>
+    <string name="Watched">Прочитанные</string>
+    <string name="Write">Написать</string>
+    <string name="NewFolder">Добавить</string>
+    <string name="NewMessagesShort">Новые</string>
+    <string name="Exit">Выйти</string>
+    <string name="NewMessagesLong">Новые сообщения</string>
 </resources>
