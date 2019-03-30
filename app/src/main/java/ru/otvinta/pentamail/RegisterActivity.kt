@@ -31,7 +31,7 @@ class RegisterActivity : AppCompatActivity() {
 
         registerButton.setOnClickListener {
             val register = RegisterTask()
-            register.execute("Register", email.text.toString(), password.text.toString(), backupMail.text.toString(), phone.text.toString())
+            register.execute("Register", email.text.toString()+"@penta.ru", password.text.toString(), backupMail.text.toString(), phone.text.toString())
             result = register.get()
             if (result == "true") {
                 val intent = Intent(this, EnterActivity::class.java)

@@ -1,28 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group
-            android:id="@+id/write">
-        <item android:id="@+id/writeMessage"
-              android:title="@string/Write" android:icon="@drawable/ic_write"/>
+    <group android:id="@+id/write">
+        <item android:id="@+id/writeMessage" android:title="@string/Write" android:icon="@drawable/ic_write"/>
     </group>
     <group android:id="@+id/Folders">
-        <item
-                android:title="@string/NewMessagesShort"
-                android:id="@+id/newMessages"
-                android:icon="@drawable/ic_new"/>
+        <item android:title="@string/NewMessagesShort" android:id="@+id/newMessages" android:icon="@drawable/ic_new"/>
         <item android:title="@string/Watched" android:id="@+id/watched" android:icon="@drawable/ic_checked"/>
         <item android:title="@string/Spam" android:id="@+id/spam" android:icon="@drawable/ic_spam"/>
         <item android:title="@string/Sent" android:id="@+id/sent" android:icon="@drawable/ic_sent"/>
         <item android:title="@string/NewFolder" android:id="@+id/newFolder" android:icon="@drawable/ic_add"/>
     </group>
-    <group
-            android:id="@+id/Chats"/>
-    <group
-            android:id="@+id/Other">
-        <item
-                android:title="@string/Exit"
-                android:icon="@drawable/ic_action_name"
-                android:id="@+id/exit"/>
+    <group android:id="@+id/Chats"/>
+    <group android:id="@+id/Other">
+        <item android:title="@string/Exit" android:icon="@drawable/ic_action_name" android:id="@+id/exit"/>
     </group>
 </menu>

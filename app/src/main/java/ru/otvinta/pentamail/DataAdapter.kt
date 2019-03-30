@@ -9,7 +9,7 @@ import android.widget.TextView
 
 
 
-internal class DataAdapter(context: Context, private val messages: List<Message>) :
+internal class DataAdapter(context: Context, var messages: List<Message>) :
     RecyclerView.Adapter<DataAdapter.ViewHolder>() {
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)

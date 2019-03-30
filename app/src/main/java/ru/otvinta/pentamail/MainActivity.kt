@@ -3,30 +3,37 @@ package ru.otvinta.pentamail
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
-import androidx.core.view.MenuCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.navigation.NavigationView
-
 
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var drawerLayout: DrawerLayout
+    private var email: String? = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         drawerLayout = findViewById(R.id.drawer_layout)
+
+        email = intent.extras!!.getString("email")
+        val args = Bundle()
+        args.putString("folder", "Новые")
+        args.putString("email", email)
+
+        val fragment = ReceivedMessagesFragment()
+        fragment.arguments = args
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.add(R.id.container, fragment, "RMF")
+        transaction.commit()
 
         val navigationView: NavigationView = findViewById(R.id.nav_view)
         navigationView.setNavigationItemSelectedListener {menuItem ->
@@ -40,6 +47,29 @@ class MainActivity : AppCompatActivity() {
                 R.id.exit -> {
                     val intent = Intent(this, EnterActivity::class.java)
                     startActivity(intent)
+                }
+                R.id.newMessages -> {
+                    val receivedMessagesFragment = ReceivedMessagesFragment()
+                    setNewFragment(receivedMessagesFragment, "Новые")
+                }
+                R.id.spam -> {
+                    val receivedMessagesFragment = ReceivedMessagesFragment()
+                    setNewFragment(receivedMessagesFragment, "Спам")
+                }
+                R.id.watched -> {
+                    val receivedMessagesFragment = ReceivedMessagesFragment()
+                    setNewFragment(receivedMessagesFragment, "Прочитанные")
+                }
+                R.id.sent -> {
+                    val receivedMessagesFragment = ReceivedMessagesFragment()
+                    setNewFragment(receivedMessagesFragment, "Отправленные")
+                }
+                R.id.newFolder -> {
+
+                }
+                R.id.writeMessage -> {
+                    val newMessageFragment = NewMessageFragment()
+                    setNewFragment(newMessageFragment, "")
                 }
             }
 
@@ -85,6 +115,27 @@ class MainActivity : AppCompatActivity() {
                 true
             }
             else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun setNewFragment(fragment: Fragment, folder: String) {
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.addToBackStack(null)
+        transaction.commit()
+        if (folder != "") {
+            title = folder + " сообщения"
+            val args = Bundle()
+            args.putString("folder", folder)
+            args.putString("email", email)
+            fragment.arguments = args
+            transaction.replace(R.id.container, fragment, "RMF")
+        }
+        else {
+            title = "Написать"
+            val args = Bundle()
+            args.putString("email", email)
+            fragment.arguments = args
+            transaction.replace(R.id.container, fragment, "NMF")
         }
     }
 }

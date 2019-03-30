@@ -9,4 +9,5 @@
     <string name="NewMessagesShort">Новые</string>
     <string name="Exit">Выйти</string>
     <string name="NewMessagesLong">Новые сообщения</string>
+    <string name="MailName">\@penta.ru</string>
 </resources>
