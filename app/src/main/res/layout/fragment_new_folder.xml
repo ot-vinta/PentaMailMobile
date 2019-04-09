@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".NewFolderFragment"
+            android:background="@color/backgroundColor">
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="55dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="55dp"
+            android:background="@drawable/small_corners_primary_light_color">
+        <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:layout_marginTop="40dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:padding="2dp"
+                android:paddingStart="8dp"
+                android:lines="2"
+                android:textColorHint="@color/secondaryTextColor"
+                android:background="@drawable/input_form_style" android:fontFamily="@font/roboto"
+                android:textSize="18sp" android:textColor="@color/primaryTextColor"
+                android:id="@+id/folderNameField" android:inputType="textLongMessage|textMultiLine"
+                android:hint="Название"/>
+        <ImageButton
+                android:src="@drawable/ic_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:id="@+id/addFolderButton"
+                android:layout_gravity="center"
+                android:padding="12dp"
+                android:layout_margin="25dp"
+                android:background="@drawable/big_corners_secondary_color" android:elevation="8dp"
+                android:contentDescription="Add"/>
+    </LinearLayout>
+</GridLayout>

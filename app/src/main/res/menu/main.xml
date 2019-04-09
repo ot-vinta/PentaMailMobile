@@ -2,17 +2,19 @@
 <menu xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:android="http://schemas.android.com/apk/res/android">
 
     <group android:id="@+id/write">
-        <item android:id="@+id/writeMessage" android:title="@string/Write" android:icon="@drawable/ic_write"/>
+        <item android:id="@+id/writeMessage" android:title="@string/Write" android:icon="@drawable/ic_write" android:orderInCategory="0"/>
     </group>
-    <group android:id="@+id/Folders">
-        <item android:title="@string/NewMessagesShort" android:id="@+id/newMessages" android:icon="@drawable/ic_new"/>
-        <item android:title="@string/Watched" android:id="@+id/watched" android:icon="@drawable/ic_checked"/>
-        <item android:title="@string/Spam" android:id="@+id/spam" android:icon="@drawable/ic_spam"/>
-        <item android:title="@string/Sent" android:id="@+id/sent" android:icon="@drawable/ic_sent"/>
-        <item android:title="@string/NewFolder" android:id="@+id/newFolder" android:icon="@drawable/ic_add"/>
+    <group android:id="@+id/folders">
+        <item android:title="@string/NewMessagesShort" android:id="@+id/newMessages" android:icon="@drawable/ic_new" android:orderInCategory="1"/>
+        <item android:title="@string/Watched" android:id="@+id/watched" android:icon="@drawable/ic_checked" android:orderInCategory="1"/>
+        <item android:title="@string/Spam" android:id="@+id/spam" android:icon="@drawable/ic_spam" android:orderInCategory="1"/>
+        <item android:title="@string/Sent" android:id="@+id/sent" android:icon="@drawable/ic_sent" android:orderInCategory="1"/>
     </group>
-    <group android:id="@+id/Chats"/>
-    <group android:id="@+id/Other">
-        <item android:title="@string/Exit" android:icon="@drawable/ic_action_name" android:id="@+id/exit"/>
+    <group android:id="@+id/addFolderGroup">
+        <item android:title="@string/NewFolder" android:id="@+id/newFolder" android:icon="@drawable/ic_add" android:orderInCategory="2"/>
+    </group>
+    <group android:id="@+id/chats"/>
+    <group android:id="@+id/other">
+        <item android:title="@string/Exit" android:icon="@drawable/ic_action_name" android:id="@+id/exit" android:orderInCategory="4"/>
     </group>
 </menu>

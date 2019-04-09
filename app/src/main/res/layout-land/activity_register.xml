@@ -64,8 +64,9 @@
                         android:background="@drawable/input_form_style"
                         android:layout_marginTop="18dp">
                     <com.google.android.material.textfield.TextInputLayout
-                            android:layout_width="602dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             app:helperTextEnabled="false" app:hintAnimationEnabled="false" app:hintEnabled="false">
 
                         <com.google.android.material.textfield.TextInputEditText
@@ -79,11 +80,14 @@
                                 android:hint="Логин" style="@style/Widget.AppCompat.EditText"/>
                     </com.google.android.material.textfield.TextInputLayout>
                     <TextView
-                            android:layout_width="100dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:text="@string/MailName"
+                            android:maxLines="1"
+                            android:layout_weight="0"
                             android:layout_marginTop="10dp"
                             android:layout_marginStart="3dp"
+                            android:layout_marginEnd="5dp"
                             android:fontFamily="@font/roboto" android:textSize="14sp"
                             android:textColor="@color/primaryTextColor"/>
                 </LinearLayout>
