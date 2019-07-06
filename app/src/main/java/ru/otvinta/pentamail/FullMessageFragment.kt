@@ -4,14 +4,11 @@ import android.content.Intent
 import android.net.Uri
 import android.os.AsyncTask
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_received_messages.*
+import android.widget.ImageButton
+import android.widget.TextView
+import android.widget.Toast
 import java.io.BufferedReader
 import java.io.BufferedWriter
 import java.io.InputStreamReader
@@ -21,79 +18,66 @@ import java.net.HttpURLConnection
 import java.net.URL
 
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+class FullMessageFragment : Fragment(), onAsyncTaskListener {
 
-/**
- * A simple [Fragment] subclass.
- * Activities that contain this fragment must implement the
- * [ReceivedMessagesFragment.OnFragmentInteractionListener] interface
- * to handle interaction events.
- * Use the [ReceivedMessagesFragment.newInstance] factory method to
- * create an instance of this fragment.
- *
- */
-class ReceivedMessagesFragment : Fragment(), onAsyncTaskListener {
-
-    private var messages = ArrayList<Message>()
+    private var id: String? = null
+    private var sender: String? = null
+    private var title: String? = null
+    private var date: String? = null
+    private var content: String? = null
     private var email: String? = null
-    private var folder: String? = null
-    private lateinit var recyclerView : RecyclerView
-    private lateinit var dataAdapter : DataAdapter
+    private var folders = ArrayList<Folder>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        val v = inflater.inflate(R.layout.fragment_received_messages, container, false)
+        val v = inflater.inflate(R.layout.fragment_full_message, container, false)
 
         if (arguments != null) {
             val args = arguments
-            folder = args!!.getString("folder")
+            sender = args!!.getString("sender")
+            id = args.getString("id")
+            title = args.getString("title")
+            date = args.getString("date")
+            content = args.getString("content")
             email = args.getString("email")
+            folders = args.getSerializable("folders") as ArrayList<Folder>
         }
 
-        getMessages(folder)
+        val senderField = v.findViewById<TextView>(R.id.senderField)
+        val titleField = v.findViewById<TextView>(R.id.titleField)
+        val dateField = v.findViewById<TextView>(R.id.dateField)
+        val contentField = v.findViewById<TextView>(R.id.contentField)
+
+        senderField.text = sender
+        titleField.text = title
+        dateField.text = date
+        contentField.text = content
+
+        val deleteButton = v.findViewById<ImageButton>(R.id.deleteButton)
+        val moveButton = v.findViewById<ImageButton>(R.id.moveButton)
+
+        deleteButton.setOnClickListener {
+            val messagesTask = DeleteTask(this)
+            messagesTask.execute("DeleteMessage", id)
+        }
+
+        moveButton.setOnClickListener {
+            
+        }
 
         return v
     }
 
-    private fun getMessages(folder : String?) {
-        messages.clear()
-        val messagesTask = MessagesTask(this)
-        messagesTask.execute("GetMessages", email, folder)
-    }
-
     override fun onAsyncTaskFinished(v: ArrayList<String>) {
-        var mailsList = ArrayList<String>()
-        try {
-            mailsList = v[0].split("<%$%>") as ArrayList<String>
-        }
-        catch (e: IndexOutOfBoundsException){
-            e.printStackTrace()
-        }
-
-        for (mail in mailsList)
-            if ((mail != "/$//$//$/") && (mail != "")){
-            val mailContent = mail.split("/$/")
-            val id = mailContent[0]
-            val sender = mailContent[1]
-            val date = mailContent[2]
-            val title = mailContent[3]
-            val content = mailContent[4]
-            messages.add(Message(id, sender, "Отправлено: " + date, title, content))
-        }
-
-        recyclerView = view!!.findViewById(R.id.MessageList)
-        recyclerView.layoutManager = LinearLayoutManager(view!!.context)
-        dataAdapter = DataAdapter(view!!.context, messages)
-        dataAdapter.messages = messages
-        recyclerView.adapter = dataAdapter
+        val intent = Intent(context, MainActivity::class.java)
+        intent.putExtra("email", email)
+        startActivity(intent)
     }
 
 
-    class MessagesTask(val fragment: ReceivedMessagesFragment) : AsyncTask<String, Int, ArrayList<String>>() {
+    class DeleteTask(val fragment: FullMessageFragment) : AsyncTask<String, Int, ArrayList<String>>() {
 
         private lateinit var connection : HttpURLConnection
         private lateinit var result : ArrayList<String>
@@ -113,8 +97,7 @@ class ReceivedMessagesFragment : Fragment(), onAsyncTaskListener {
                 connection.doInput = true
 
                 val builder = Uri.Builder().appendQueryParameter("method", params[0])
-                    .appendQueryParameter("email", params[1])
-                    .appendQueryParameter("folder", params[2])
+                    .appendQueryParameter("id", params[1])
 
                 val query = builder.build().encodedQuery
 

@@ -26,6 +26,7 @@ internal class DataAdapter(context: Context, var messages: List<Message>) :
         holder.dateView.text = message.date
         holder.titleView.text = message.title
         holder.contentView.text = message.content
+        holder.idView.text = message.id
     }
 
     override fun getItemCount(): Int {
@@ -33,10 +34,10 @@ internal class DataAdapter(context: Context, var messages: List<Message>) :
     }
 
     inner class ViewHolder internal constructor(view: View) : RecyclerView.ViewHolder(view) {
-        internal val senderView: TextView = view.findViewById<View>(R.id.sender) as TextView
-        internal val dateView: TextView = view.findViewById<View>(R.id.date) as TextView
-        internal val titleView: TextView = view.findViewById<View>(R.id.title) as TextView
-        internal val contentView: TextView = view.findViewById<View>(R.id.content) as TextView
-
+        internal val senderView: TextView = view.findViewById(R.id.sender) as TextView
+        internal val dateView: TextView = view.findViewById(R.id.date) as TextView
+        internal val titleView: TextView = view.findViewById(R.id.title) as TextView
+        internal val contentView: TextView = view.findViewById(R.id.content) as TextView
+        internal val idView: TextView = view.findViewById(R.id.messageId) as TextView
     }
 }

@@ -10,4 +10,7 @@
     <string name="Exit">Выйти</string>
     <string name="NewMessagesLong">Новые сообщения</string>
     <string name="MailName">\@penta.ru</string>
+    <string name="sendDateString">Отправлено:</string>
+    <string name="delete_button_description">delete button</string>
+    <string name="enter_error">Ошибка входа</string>
 </resources>

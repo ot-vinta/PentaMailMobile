@@ -65,7 +65,8 @@ class NewFolderFragment : Fragment(), View.OnClickListener {
         override fun doInBackground(vararg params: String?): ArrayList<String> {
 
             try {
-                val url = URL("http://pentamail/server/ServerAndroid.php")
+                val urlName = UrlName()
+                val url = URL(urlName.url)
 
                 connection = url.openConnection() as HttpURLConnection
                 connection.readTimeout = 15000

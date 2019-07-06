@@ -5,9 +5,12 @@ import android.net.Uri
 import android.os.AsyncTask
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import com.google.android.material.textfield.TextInputEditText
+import org.w3c.dom.Text
 import java.io.BufferedReader
 import java.io.BufferedWriter
 import java.io.InputStreamReader
@@ -24,6 +27,18 @@ class EnterActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_enter)
+
+        try {
+            val error = intent.extras!!.getBoolean("error")
+            if (error) {
+                val errorText = findViewById<TextView>(R.id.error_text)
+                errorText.text = getString(R.string.enter_error)
+            }
+        }
+        catch (e : NullPointerException){
+            val errorText = findViewById<TextView>(R.id.error_text)
+            errorText.text = ""
+        }
 
         val email = findViewById<TextInputEditText>(R.id.EmailField)
         val password = findViewById<TextInputEditText>(R.id.PasswordField)
@@ -45,6 +60,11 @@ class EnterActivity : AppCompatActivity() {
                 intent.putExtra("email", account)
                 startActivity(intent)
             }
+            else {
+                val intent = Intent(this, EnterActivity::class.java)
+                intent.putExtra("error", true)
+                startActivity(intent)
+            }
         }
     }
 
@@ -55,7 +75,8 @@ class EnterActivity : AppCompatActivity() {
         override fun doInBackground(vararg params: String?): String {
 
             try {
-                val url = URL("http://pentamail/server/ServerAndroid.php")
+                val urlName = UrlName()
+                val url = URL(urlName.url)
 
                 connection = url.openConnection() as HttpURLConnection
                 connection.readTimeout = 15000

@@ -115,6 +115,11 @@
                         android:layout_marginBottom="4dp"
                         android:textColor="@color/primaryTextColor" android:textAlignment="center"
                         android:fontFamily="@font/roboto"/>
+                <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="22sp" android:id="@+id/error_text" android:textSize="18sp"
+                        android:visibility="visible"
+                        android:textColor="#FF1100" android:gravity="center" android:fontFamily="@font/roboto"/>
             </LinearLayout>
         </LinearLayout>
         <LinearLayout

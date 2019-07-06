@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.TextView
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
@@ -190,7 +191,8 @@ class MainActivity : AppCompatActivity(), onAsyncTaskListener {
         override fun doInBackground(vararg params: String?): ArrayList<String> {
 
             try {
-                val url = URL("http://pentamail/server/ServerAndroid.php")
+                val urlName = UrlName()
+                val url = URL(urlName.url)
 
                 connection = url.openConnection() as HttpURLConnection
                 connection.readTimeout = 15000
@@ -259,4 +261,22 @@ class MainActivity : AppCompatActivity(), onAsyncTaskListener {
         }
     }
 
+
+    fun openMessage(v : View){
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.addToBackStack(null)
+        transaction.commit()
+        val args = Bundle()
+        args.putString("id", v.findViewById<TextView>(R.id.messageId).text.toString())
+        args.putString("sender", v.findViewById<TextView>(R.id.sender).text.toString())
+        args.putString("title", v.findViewById<TextView>(R.id.title).text.toString())
+        args.putString("date", v.findViewById<TextView>(R.id.date).text.toString())
+        args.putString("content", v.findViewById<TextView>(R.id.content).text.toString())
+        args.putString("email", email)
+        args.putSerializable("folders", folders)
+        val fullMessageFragment = FullMessageFragment()
+        toolbar.title = "Сообщение"
+        fullMessageFragment.arguments = args
+        transaction.replace(R.id.container, fullMessageFragment, "FMF")
+    }
 }

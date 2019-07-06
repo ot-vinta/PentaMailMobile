@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TableLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="horizontal"
+        xmlns:tools="http://schemas.android.com/tools" android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:layout_marginStart="5dp"
         android:layout_marginEnd="5dp"
         android:elevation="8dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:onClick="openMessage"
         android:background="@drawable/small_corners_primary_light_color">
 
     <TableRow
@@ -57,5 +60,16 @@
                 android:maxLines="2"
                 android:fontFamily="@font/roboto" android:textColor="@color/primaryTextColor"
                 android:layout_marginStart="10dp"/>
+    </TableRow>
+
+    <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:layout_weight="2">
+
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:id="@+id/messageId" android:visibility="invisible"
+        />
     </TableRow>
 </TableLayout>

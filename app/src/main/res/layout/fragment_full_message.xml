@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".FullMessageFragment"
+            android:background="@color/backgroundColor">
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="25dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="25dp"
+            android:background="@drawable/small_corners_primary_light_color">
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/small_corners_primary_color">
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/titleField" android:textSize="18sp"
+                    android:textColor="@color/primaryTextColor" android:textStyle="bold"
+                    android:layout_weight="3"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="20dp"/>
+            <ImageButton
+                    android:src="@drawable/ic_move"
+                    android:layout_width="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_height="wrap_content" android:id="@+id/moveButton" android:layout_weight="1"
+                    style="@style/Widget.AppCompat.ActionButton"/>
+            <ImageButton
+                    android:src="@drawable/ic_delete"
+                    android:layout_width="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_height="wrap_content" android:id="@+id/deleteButton" android:layout_weight="1"
+                    android:contentDescription="@string/delete_button_description"
+                    style="@style/Widget.AppCompat.ActionButton"/>
+        </LinearLayout>
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:id="@+id/senderField" android:textSize="14sp"
+                android:textColor="@color/primaryTextColor"
+                android:layout_margin="10dp"/>
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:id="@+id/dateField" android:text="@string/sendDateString"
+                android:textSize="14sp" android:textColor="@color/secondaryTextColor"
+                android:layout_marginStart="10dp"
+                android:layout_marginBottom="5dp"/>
+        <View android:layout_width="match_parent" android:layout_height="1dp"
+              android:background="@color/secondaryTextColor"/>
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" android:id="@+id/contentField"
+                android:layout_margin="10dp" android:textSize="14sp" android:textColor="@color/primaryTextColor"/>
+    </LinearLayout>
+</GridLayout>
