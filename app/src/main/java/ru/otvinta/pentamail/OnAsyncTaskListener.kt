@@ -1,5 +1,5 @@
 package ru.otvinta.pentamail
 
-interface onAsyncTaskListener {
+interface OnAsyncTaskListener {
     fun onAsyncTaskFinished(v : ArrayList<String>)
 }

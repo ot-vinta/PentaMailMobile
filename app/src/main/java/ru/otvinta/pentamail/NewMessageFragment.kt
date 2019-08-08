@@ -18,7 +18,7 @@ import java.lang.Exception
 import java.net.HttpURLConnection
 import java.net.URL
 
-class NewMessageFragment : Fragment(), onAsyncTaskListener, View.OnClickListener {
+class NewMessageFragment : Fragment(), OnAsyncTaskListener, View.OnClickListener {
 
     var sender: String? = ""
 

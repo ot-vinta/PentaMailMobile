@@ -71,5 +71,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:id="@+id/messageId" android:visibility="invisible"
         />
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:id="@+id/isViewed" android:visibility="invisible"
+        />
     </TableRow>
 </TableLayout>

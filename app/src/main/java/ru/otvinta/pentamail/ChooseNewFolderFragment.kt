@@ -1,12 +1,14 @@
 package ru.otvinta.pentamail
 
+import android.content.Intent
 import android.net.Uri
 import android.os.AsyncTask
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import java.io.BufferedReader
@@ -16,85 +18,87 @@ import java.io.OutputStreamWriter
 import java.lang.Exception
 import java.net.HttpURLConnection
 import java.net.URL
+import androidx.recyclerview.widget.DividerItemDecoration
+import android.widget.AdapterView.OnItemClickListener
 
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 
-/**
- * A simple [Fragment] subclass.
- * Activities that contain this fragment must implement the
- * [ReceivedMessagesFragment.OnFragmentInteractionListener] interface
- * to handle interaction events.
- * Use the [ReceivedMessagesFragment.newInstance] factory method to
- * create an instance of this fragment.
- *
- */
-class ReceivedMessagesFragment : Fragment(), OnAsyncTaskListener {
 
-    private var messages = ArrayList<Message>()
+
+class ChooseNewFolderFragment : DialogFragment(), OnAsyncTaskListener {
+
+    private var folders = ArrayList<Folder>()
     private var email: String? = null
-    private var folder: String? = null
+    private var messageId: String? = null
     private lateinit var recyclerView : RecyclerView
-    private lateinit var messageDataAdapter : MessageDataAdapter
+    private lateinit var dataAdapter : FolderDataAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        val v = inflater.inflate(R.layout.fragment_received_messages, container, false)
+        dialog!!.setTitle("Выберите папку")
+        val v = inflater.inflate(R.layout.fragment_choose_new_folder, null)
 
         if (arguments != null) {
             val args = arguments
-            folder = args!!.getString("folder")
-            email = args.getString("email")
+            email = args!!.getString("email")
+            messageId = args.getString("messageId")
         }
 
-        getMessages(folder)
+        getFolders(email)
 
         return v
     }
 
-    private fun getMessages(folder : String?) {
-        messages.clear()
-        val messagesTask = MessagesTask(this)
-        messagesTask.execute("GetMessages", email, folder)
+    fun getFolders(email : String?){
+        folders.clear()
+        val getFoldersTask = GetFolderTask(this)
+        getFoldersTask.execute("GetFolders", email)
     }
 
     override fun onAsyncTaskFinished(v: ArrayList<String>) {
-        var mailsList = ArrayList<String>()
+        var foldersList = ArrayList<String>()
         try {
-            var fullV = ""
-            for (elem in v)
-                fullV += elem
-            if (fullV != "")
-                mailsList = fullV.split("<%$%>") as ArrayList<String>
+            foldersList = v[0].split("<%$%>") as ArrayList<String>
         }
         catch (e: IndexOutOfBoundsException){
             e.printStackTrace()
         }
 
-        for (mail in mailsList)
-            if ((mail != "/$//$//$//$/") && (mail != "")){
-            val mailContent = mail.split("/$/")
-            val id = mailContent[0]
-            val sender = mailContent[1]
-            val date = mailContent[2]
-            val title = mailContent[3]
-            val content = mailContent[4]
-            val isViewed = mailContent[5]
-            messages.add(Message(id, sender, "Отправлено: " + date, title, content, isViewed.toInt()))
-        }
+        for (folder in foldersList)
+            if ((folder != "/$/") && (folder != "")){
+                val mailContent = folder.split("/$/")
+                val id = mailContent[0].toInt()
+                val title = mailContent[1]
+                folders.add(Folder(id, title))
+            }
 
-        recyclerView = view!!.findViewById(R.id.MessageList)
+        recyclerView = view!!.findViewById(R.id.FolderList)
         recyclerView.layoutManager = LinearLayoutManager(view!!.context)
-        messageDataAdapter = MessageDataAdapter(view!!.context, messages)
-        messageDataAdapter.messages = messages
-        recyclerView.adapter = messageDataAdapter
+        dataAdapter = FolderDataAdapter(view!!.context, folders)
+        dataAdapter.folders = folders
+        recyclerView.adapter = dataAdapter
+        recyclerView.addItemDecoration(DividerItemDecoration(context!!, DividerItemDecoration.VERTICAL))
+        recyclerView.addOnItemTouchListener(
+            RecyclerItemClickListener(context!!, recyclerView, object : RecyclerItemClickListener.OnItemClickListener {
+                override fun onItemClick(view: View, position: Int) {
+                    val mover = MessageMover(messageId!!.toInt(),view.findViewById<TextView>(R.id.folderId).text.toString().toInt())
+                    mover.move()
+                    val account = email
+                    val intent = Intent(activity, MainActivity::class.java)
+                    intent.putExtra("email", account)
+                    startActivity(intent)
+                }
+
+                override fun onLongItemClick(view: View, position: Int) {
+                    // do whatever
+                }
+            })
+        )
     }
 
-    class MessagesTask(val fragment: ReceivedMessagesFragment) : AsyncTask<String, Int, ArrayList<String>>() {
+    class GetFolderTask(val fragment: ChooseNewFolderFragment) : AsyncTask<String, Int, ArrayList<String>>() {
 
         private lateinit var connection : HttpURLConnection
         private lateinit var result : ArrayList<String>
@@ -115,7 +119,6 @@ class ReceivedMessagesFragment : Fragment(), OnAsyncTaskListener {
 
                 val builder = Uri.Builder().appendQueryParameter("method", params[0])
                     .appendQueryParameter("email", params[1])
-                    .appendQueryParameter("folder", params[2])
 
                 val query = builder.build().encodedQuery
 

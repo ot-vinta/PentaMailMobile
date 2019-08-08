@@ -8,7 +8,6 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.ImageButton
 import android.widget.TextView
-import android.widget.Toast
 import java.io.BufferedReader
 import java.io.BufferedWriter
 import java.io.InputStreamReader
@@ -18,7 +17,7 @@ import java.net.HttpURLConnection
 import java.net.URL
 
 
-class FullMessageFragment : Fragment(), onAsyncTaskListener {
+class FullMessageFragment : Fragment(), OnAsyncTaskListener {
 
     private var id: String? = null
     private var sender: String? = null
@@ -26,6 +25,7 @@ class FullMessageFragment : Fragment(), onAsyncTaskListener {
     private var date: String? = null
     private var content: String? = null
     private var email: String? = null
+    private var isViewed: String? = null
     private var folders = ArrayList<Folder>()
 
     override fun onCreateView(
@@ -43,6 +43,7 @@ class FullMessageFragment : Fragment(), onAsyncTaskListener {
             content = args.getString("content")
             email = args.getString("email")
             folders = args.getSerializable("folders") as ArrayList<Folder>
+            isViewed = args.getString("isViewed")
         }
 
         val senderField = v.findViewById<TextView>(R.id.senderField)
@@ -64,10 +65,28 @@ class FullMessageFragment : Fragment(), onAsyncTaskListener {
         }
 
         moveButton.setOnClickListener {
-            
+            val chooseNewFolderFragment = ChooseNewFolderFragment()
+            val args = Bundle()
+            args.putString("email", email)
+            args.putString("messageId", id)
+            chooseNewFolderFragment.arguments = args
+            chooseNewFolderFragment.show(activity!!.supportFragmentManager, "CNFF")
+        }
+
+        if ((isViewed == "0") && (sender != email)){
+            val mover = MessageMover(id!!.toInt(), senderFolder())
+            mover.move()
         }
 
         return v
+    }
+
+    private fun senderFolder(): Int {
+        var resultId = 0
+        for (folder in folders)
+            if (folder.title == "Прочитанные")
+                resultId = folder.id
+        return resultId
     }
 
     override fun onAsyncTaskFinished(v: ArrayList<String>) {

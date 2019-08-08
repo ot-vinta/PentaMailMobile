@@ -12,10 +12,8 @@ import android.widget.TextView
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
-import androidx.core.view.get
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.BufferedReader
@@ -27,7 +25,7 @@ import java.net.HttpURLConnection
 import java.net.URL
 
 
-class MainActivity : AppCompatActivity(), onAsyncTaskListener {
+class MainActivity : AppCompatActivity(), OnAsyncTaskListener {
 
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navigationView: NavigationView
@@ -173,8 +171,8 @@ class MainActivity : AppCompatActivity(), onAsyncTaskListener {
                 val folderContent = folder.split("/$/")
                 val id = folderContent[0].toInt()
                 val title = folderContent[1]
+                folders.add(Folder(id, title))
                 if ((title != "Новые") && (title != "Спам") && (title != "Отправленные") && (title != "Прочитанные")) {
-                    folders.add(Folder(id, title))
                     navigationView.menu.add(R.id.folders, Menu.NONE, 1, title)
                     order++
                 }
@@ -272,6 +270,7 @@ class MainActivity : AppCompatActivity(), onAsyncTaskListener {
         args.putString("title", v.findViewById<TextView>(R.id.title).text.toString())
         args.putString("date", v.findViewById<TextView>(R.id.date).text.toString())
         args.putString("content", v.findViewById<TextView>(R.id.content).text.toString())
+        args.putString("isViewed", v.findViewById<TextView>(R.id.isViewed).text.toString())
         args.putString("email", email)
         args.putSerializable("folders", folders)
         val fullMessageFragment = FullMessageFragment()
